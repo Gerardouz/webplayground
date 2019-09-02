@@ -24,6 +24,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('registration.urls')),
     path('profiles/',include('profiles.urls')),
+    #path('messenger/',include('messenger.utls')),
 ]
 
 if (settings.DEBUG):
