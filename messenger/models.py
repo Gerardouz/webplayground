@@ -39,10 +39,13 @@ class HiloManager(models.Manager):
 
 class Hilo(models.Model):
 
-    usuarios = models.ManyToManyField(User, related_name='threads')
+    usuarios = models.ManyToManyField(User, related_name='hilos')
     mensajes = models.ManyToManyField(Message)
-
+    fecha_actualizacion = models.DateTimeField(auto_now=True)
     objects = HiloManager()
+
+    class Meta():
+        ordering = ['-fecha_actualizacion']
 
 def messages_changed(sender, **kwargs):
 
@@ -65,6 +68,6 @@ def messages_changed(sender, **kwargs):
     pk_set.difference_update(false_pk_set)
 
 
-
+    instance.save()
 m2m_changed.connect(messages_changed, sender=Hilo.mensajes.through)
 

@@ -13,22 +13,23 @@
           <!-- Hilos de conversación -->
           <div class="col-md-4">
             <!-- Recorremos los Threads y sólo mostramos los que tienen como mínimo 1 mensaje -->
-            {% for hilo in request.user.threads.all %}
+            {% for hilo in request.user.hilos.all%}
+            
               {% if hilo.mensajes.all|length > 0 %}
                 <div class="mb-3">
                   <!-- Recorremos los miembros del hilo menos el propio request.user -->
-                  {% for user in hilo.usuarios.all %}
-                    {% if user != request.user %}   
+                  {% for usuario in hilo.usuarios.all%}
+                    {% if usuario != request.user %}
                       <!-- Mostramos el avatar del miembro -->  
-                      {% if user.profile.avatar %}
-                        <img src="{{user.profile.avatar.url}}" class="avatar">
+                      {% if usuario.profile.avatar %}
+                        <img src="{{usuario.profile.avatar.url}}" class="avatar">
                       {% else %}
                         <img src="{% static 'registration/075 no-avatar.jpg' %}" class="avatar">
                       {% endif %}
                       <!-- Mostramos la información del miembro -->
                       <div>
-                        <a href="{% url 'thread_detail' hilo.pk %}">{{user}}</a><br>
-                        <small><i>Hace {{hilo.last.created|timesince}}</i></small>
+                        <a href="{% url 'thread_detail' hilo.pk %}">{{usuario}}</a><br>
+                        <small><i>Hace {{hilo.mensajes.last.fecha_creacion|timesince}}</i></small>
                       </div>
                     {% endif %}
                   {% endfor %}
